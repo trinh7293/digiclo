@@ -1,15 +1,49 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="d-flex justify-space-around">
+    <v-menu>
+      <template v-slot:activator="{ props }">
+        <v-btn color="success" v-bind="props"> Activator slot </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="(item, index) in items" :key="index" :value="index">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+
+    <v-btn color="success">
+      Parent activator
+
+      <v-menu activator="parent">
+        <v-list>
+          <v-list-item v-for="(item, index) in items" :key="index" :value="index">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-btn>
+
+    <v-btn id="menu-activator" color="success"> Sibling activator </v-btn>
+
+    <v-menu activator="#menu-activator">
+      <v-list>
+        <v-list-item v-for="(item, index) in items" :key="index" :value="index">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script>
+export default {
+  data: () => ({
+    items: [
+      { title: 'Click Me' },
+      { title: 'Click Me' },
+      { title: 'Click Me' },
+      { title: 'Click Me 2' }
+    ]
+  })
 }
-</style>
+</script>
